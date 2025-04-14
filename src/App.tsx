@@ -16,12 +16,14 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <div className="safe-area-top" />
         <Routes>
           <Route path="/" element={<Navigate to="/auth" replace />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/home" element={<Index />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <div className="safe-area-bottom" />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
