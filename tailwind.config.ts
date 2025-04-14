@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				medical: {
+					blue: '#1EAEDB',
+					lightBlue: '#D3E4FD',
+					purple: '#9b87f5',
+					darkPurple: '#7E69AB',
+					gray: '#F3F3F3',
+					darkGray: '#333333'
 				}
 			},
 			borderRadius: {
@@ -89,6 +98,9 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
+			backgroundImage: {
+				'hospital-bg': "url('/images/hospital-bg.jpg')",
 			}
 		}
 	},
