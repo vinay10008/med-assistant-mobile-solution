@@ -4,18 +4,39 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, LogIn, UserPlus } from "lucide-react";
+import { Eye, EyeOff, LogIn, UserPlus, RefreshCcw } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [captcha] = useState(Math.random().toString(36).slice(2, 8));
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [captcha, setCaptcha] = useState(Math.random().toString(36).slice(2, 8));
   const [userCaptcha, setUserCaptcha] = useState('');
+  const [error, setError] = useState('');
   
+  const refreshCaptcha = () => {
+    setCaptcha(Math.random().toString(36).slice(2, 8));
+    setUserCaptcha('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
+    if (userCaptcha.toLowerCase() !== captcha.toLowerCase()) {
+      setError('Invalid CAPTCHA. Please try again.');
+      return;
+    }
+
+    if (!userId || !password) {
+      setError('Please fill in all fields');
+      return;
+    }
+
     // Authentication will be implemented when we connect to Supabase
-    console.log('Form submitted');
+    console.log('Form submitted', { userId, password });
   };
 
   return (
@@ -32,31 +53,52 @@ const Auth = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="userId">User ID</Label>
               <Input
-                type="email"
-                placeholder="Email"
+                id="userId"
+                type="text"
+                placeholder="Enter your user ID"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
                 required
-                className="w-full"
               />
-            </div>
-            <div className="space-y-2 relative">
-              <Input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                required
-                className="w-full pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2"
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
             </div>
             <div className="space-y-2">
-              <div className="bg-gray-100 p-2 rounded text-center font-mono text-lg tracking-widest select-none">
-                {captcha}
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>CAPTCHA Verification</Label>
+              <div className="flex items-center gap-2 bg-gray-100 p-2 rounded">
+                <div className="flex-1 font-mono text-lg tracking-widest select-none text-center">
+                  {captcha}
+                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={refreshCaptcha}
+                  className="h-8 w-8"
+                >
+                  <RefreshCcw size={16} />
+                </Button>
               </div>
               <Input
                 type="text"
@@ -64,9 +106,13 @@ const Auth = () => {
                 value={userCaptcha}
                 onChange={(e) => setUserCaptcha(e.target.value)}
                 required
-                className="w-full"
               />
             </div>
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
           </form>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
