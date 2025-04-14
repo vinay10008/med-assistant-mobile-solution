@@ -4,6 +4,7 @@ import BackgroundContainer from '@/components/BackgroundContainer';
 import WelcomeHeader from '@/components/WelcomeHeader';
 import AIConsultation from '@/components/AIConsultation';
 import AppointmentManager from '@/components/AppointmentManager';
+import HealthIssues from '@/components/HealthIssues';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
@@ -14,9 +15,13 @@ const Index = () => {
       <div className="container mx-auto px-4 py-6">
         <WelcomeHeader />
         
-        <div className={`mt-6 grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-2 gap-8'}`}>
-          <AIConsultation />
-          <AppointmentManager />
+        <div className="mt-6 space-y-6">
+          <HealthIssues />
+          
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-2 gap-8'}`}>
+            <AIConsultation />
+            <AppointmentManager />
+          </div>
         </div>
         
         <div className="mt-8 text-center text-xs text-gray-500">
