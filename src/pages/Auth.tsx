@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Eye, EyeOff, LogIn, UserPlus, RefreshCcw } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [userId, setUserId] = useState('');
@@ -35,13 +36,17 @@ const Auth = () => {
       return;
     }
 
-    // Authentication will be implemented when we connect to Supabase
-    console.log('Form submitted', { userId, password });
+    navigate('/home');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-medical-lightBlue to-white p-4">
-      <Card className="w-full max-w-md">
+    <div 
+      className="min-h-screen flex items-center justify-center bg-cover bg-center p-4"
+      style={{
+        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')",
+      }}
+    >
+      <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
             {isLogin ? 'Welcome Back' : 'Create an Account'}
