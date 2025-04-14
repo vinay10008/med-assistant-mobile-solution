@@ -5,10 +5,50 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, Thermometer, Stethoscope, HeartPulse, Pill } from "lucide-react";
 
 const commonHealthIssues = [
-  { icon: Thermometer, label: "Fever & Cold", description: "Temperature, chills, or flu-like symptoms" },
-  { icon: Stethoscope, label: "Respiratory Issues", description: "Cough, breathing problems, or chest congestion" },
-  { icon: HeartPulse, label: "Body Pain", description: "Headache, muscle pain, or general body ache" },
-  { icon: Pill, label: "Digestive Issues", description: "Stomach pain, nausea, or digestive problems" },
+  { 
+    icon: Thermometer, 
+    label: "Fever & Cold", 
+    description: "Temperature, chills, or flu-like symptoms",
+    solutions: [
+      "Rest and stay hydrated",
+      "Take acetaminophen or ibuprofen for fever",
+      "Use a humidifier",
+      "Try warm salt water gargle"
+    ]
+  },
+  { 
+    icon: Stethoscope, 
+    label: "Respiratory Issues", 
+    description: "Cough, breathing problems, or chest congestion",
+    solutions: [
+      "Use steam inhalation",
+      "Try honey for cough relief",
+      "Stay in upright position",
+      "Keep room well-ventilated"
+    ]
+  },
+  { 
+    icon: HeartPulse, 
+    label: "Body Pain", 
+    description: "Headache, muscle pain, or general body ache",
+    solutions: [
+      "Apply cold/hot compress",
+      "Gentle stretching exercises",
+      "Over-the-counter pain relievers",
+      "Rest affected areas"
+    ]
+  },
+  { 
+    icon: Pill, 
+    label: "Digestive Issues", 
+    description: "Stomach pain, nausea, or digestive problems",
+    solutions: [
+      "Follow BRAT diet (Bananas, Rice, Applesauce, Toast)",
+      "Stay hydrated with clear fluids",
+      "Avoid heavy/spicy foods",
+      "Try ginger tea for nausea"
+    ]
+  },
 ];
 
 const HealthIssues = () => {
@@ -16,7 +56,7 @@ const HealthIssues = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {commonHealthIssues.map((issue) => (
-          <Card key={issue.label} className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card key={issue.label} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <issue.icon className="h-5 w-5 text-medical-blue" />
@@ -25,9 +65,11 @@ const HealthIssues = () => {
               <CardDescription>{issue.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Get Help
-              </Button>
+              <ul className="list-disc list-inside space-y-2 mb-4 text-sm text-gray-600">
+                {issue.solutions.map((solution, index) => (
+                  <li key={index}>{solution}</li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         ))}
@@ -40,7 +82,7 @@ const HealthIssues = () => {
             <div>
               <h4 className="font-semibold mb-2">Need more specific help?</h4>
               <p className="text-sm text-gray-600 mb-4">
-                Use our AI Consultation service to get personalized medical advice for your specific condition.
+                These are general suggestions. For personalized medical advice, use our AI Consultation service.
               </p>
               <Button className="bg-medical-blue hover:bg-medical-purple">
                 Start AI Consultation
